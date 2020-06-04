@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "blog-production"
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      blog-production: web
+  template:
+    metadata:
+      labels:
+        blog-production: web
+    spec:
+      containers:
+      - name: "blog-production-container"
+        image: "registry.digitalocean.com/benbergstein/blog/production/app:latest"
+        env:
+        - name: SERVER_PORT
+          value: "9000"
+        - name: SERVER_ROOT
+          value: "/app/public"
+        - name: SERVER_ASSETS
+          value: "/app/public/static"
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "blog-production-lb"
+spec:
+  selector:
+    blog-production: web
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 9000
