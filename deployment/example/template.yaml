@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "${POD_NAME}"
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      ${POD_NAME}: web
+  template:
+    metadata:
+      labels:
+        ${POD_NAME}: web
+    spec:
+      containers:
+      - name: "${POD_NAME}-container"
+        image: "${DOCKER_IMAGE}"
+        args: ["-listen=:${PORT}", "-text=hello world"]
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "${POD_NAME}-lb"
+spec:
+  selector:
+    ${POD_NAME}: web
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: ${PORT}

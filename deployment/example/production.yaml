@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "example-production"
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      example-production: web
+  template:
+    metadata:
+      labels:
+        example-production: web
+    spec:
+      containers:
+      - name: "example-production-container"
+        image: "hashicorp/http-echo"
+        args: ["-listen=:8080", "-text=hello world"]
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "example-production-lb"
+spec:
+  selector:
+    example-production: web
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8080
