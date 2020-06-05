@@ -23,7 +23,7 @@ apply: ${DEPLOY_FILE}
 	${KUBECTL_CMD} apply -f $<
 
 clean:
-	rm ${DEPLOY_FILE}
+	-rm ${DEPLOY_FILE}
 
 destroy:
 	${KUBECTL_CMD} delete -f ${DEPLOY_FILE}
