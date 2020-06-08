@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: "${POD_NAME}-container"
-        image: "${DOCKER_IMAGE}"
+        image: "hashicorp/http-echo"
         args: ["-listen=:${PORT}", "-text=hello world"]
       imagePullSecrets:
       - name: regcred

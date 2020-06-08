@@ -4,6 +4,7 @@ export PROJECT ?= blog
 export ENVIRONMENT ?= production
 export POD_NAME ?= ${PROJECT}-${ENVIRONMENT}
 export SERVICE ?= app
+export PORT ?= 8080
 
 DOCKER_HOST ?= registry.digitalocean.com
 DOCKER_REPO ?= benbergstein
