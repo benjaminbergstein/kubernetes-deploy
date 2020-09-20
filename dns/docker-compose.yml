@@ -1,0 +1,17 @@
+version: "3.1"
+
+services:
+  yarn:
+    image: node:latest
+    volumes:
+      - .:/app
+    entrypoint: ["yarn", "--cwd", "/app"]
+
+  api:
+    image: node:latest
+    entrypoint: ["node", "/app/index.js"]
+    environment:
+      - NAME_API_TOKEN
+      - NAME_USERNAME
+    volumes:
+      - .:/app

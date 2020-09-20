@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "${POD_NAME}-psql"
+  namespace: default
+spec:
+  template:
+    metadata:
+      labels:
+        ${POD_NAME}: psql
+    spec:
+      containers:
+      - name: "${POD_NAME}-container"
+        image: "postgres:latest"
+        command: ["sleep", "6000"]
+        env:
+        - name: PORT
+          value: "3000"
+        - name: DATABASE_URL
+          value: "${DATABASE_URL}"
+      restartPolicy: "Never"
+      imagePullSecrets:
+      - name: regcred

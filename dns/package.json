@@ -1,0 +1,11 @@
+{
+  "name": "name-dns",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "base-64": "^0.1.0",
+    "fetch": "^1.1.0",
+    "node-fetch": "^2.6.1"
+  }
+}

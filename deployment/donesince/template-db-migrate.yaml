@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "${POD_NAME}-console"
+  namespace: default
+spec:
+  template:
+    metadata:
+      labels:
+        ${POD_NAME}: console
+    spec:
+      containers:
+      - name: "${POD_NAME}-container"
+        image: "${DOCKER_IMAGE}"
+        command: ["sleep", "600"]
+        env:
+        - name: PORT
+          value: "3000"
+        - name: DATABASE_URL
+          value: "${DATABASE_URL}"
+      restartPolicy: "Never"
+      imagePullSecrets:
+      - name: regcred

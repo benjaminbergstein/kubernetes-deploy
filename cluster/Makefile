@@ -1,6 +1,6 @@
 include ../shared.mk
 
-deploy:
+deploy-cluster:
 	${CLUSTER_CMD} create ${CLUSTER_NAME} \
 		--auto-upgrade \
 		--count ${NODE_COUNT} \
@@ -14,5 +14,5 @@ authorize:
 		--from-file=.dockerconfigjson=${HOME}/.docker/config.json \
 		--type=kubernetes.io/dockerconfigjson
 
-destroy:
+destroy-cluster:
 	${CLUSTER_CMD} rm ${CLUSTER_NAME}
