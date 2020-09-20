@@ -36,7 +36,11 @@ const getRecord = async (domain, host) => (
       const { records } = res
 
       return records.find(
-        ({ host: recordHost }) => recordHost === host
+        ({ host: recordHost, ...foo }) => (
+          recordHost === host || (
+            recordHost === undefined && host === ''
+          )
+        )
       )
     })
 )

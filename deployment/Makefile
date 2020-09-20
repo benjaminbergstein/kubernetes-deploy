@@ -31,6 +31,14 @@ deploy-dns:
 	./wait-for-service.sh ${POD_NAME}-lb
 	${DNS_API} create-record ${DOMAIN_NAME} '${SUBDOMAIN_NAME}' A ${SERVICE_IP}
 
+deploy-cname:
+	${DNS_API} create-record ${APP_CNAME} 'www' CNAME '${SUBDOMAIN_NAME}.${DOMAIN_NAME}'
+	${DNS_API} create-record ${APP_CNAME} '' CNAME '${SUBDOMAIN_NAME}.${DOMAIN_NAME}'
+
+destroy-cname:
+	# ${DNS_API} destroy-record ${APP_CNAME} 'www'
+	${DNS_API} destroy-record ${APP_CNAME} ''
+
 await-rollout:
 	${KUBECTL_CMD} rollout status deployment/${POD_NAME}
 
